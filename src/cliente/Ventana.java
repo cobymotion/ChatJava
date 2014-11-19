@@ -17,6 +17,7 @@ public class Ventana extends javax.swing.JFrame {
         try{
         salida = new DataOutputStream
         (socket.getOutputStream());
+        new HiloCliente(socket, texto);
         }catch(Exception e) {
             System.out.println("No pudo enviar");
         }
@@ -46,6 +47,11 @@ public class Ventana extends javax.swing.JFrame {
         getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         mensaje.setColumns(23);
+        mensaje.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                mensajeActionPerformed(evt);
+            }
+        });
         jPanel1.add(mensaje);
 
         enviar.setText("Enviar");
@@ -65,12 +71,17 @@ public class Ventana extends javax.swing.JFrame {
         // TODO add your handling code here:
         try {
             String cadena = mensaje.getText(); 
-            salida.writeUTF(cadena);
+            salida.writeUTF("Coby dice:" + cadena);
             mensaje.setText("");
         } catch (Exception e) {
             System.out.println("Error al enviar");
         }
     }//GEN-LAST:event_enviarActionPerformed
+
+    private void mensajeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_mensajeActionPerformed
+        // TODO add your handling code here:
+        enviarActionPerformed(null);
+    }//GEN-LAST:event_mensajeActionPerformed
 
    
     // Variables declaration - do not modify//GEN-BEGIN:variables

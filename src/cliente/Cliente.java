@@ -7,7 +7,7 @@ public class Cliente {
     public static void main(String[] args) {
          try
          {
-             Socket socket = new Socket("130.133.41.180",5005);
+             Socket socket = new Socket("127.0.0.1",5005);
              Ventana ventana = new Ventana(socket); 
              ventana.setVisible(true);
          }

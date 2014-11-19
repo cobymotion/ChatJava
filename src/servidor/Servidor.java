@@ -1,12 +1,13 @@
 
 package servidor;
 
-import java.io.DataInputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import javax.swing.DefaultListModel;
 
 public class Servidor {
-    
+    private DefaultListModel listaUsuarios = 
+            new DefaultListModel();
     // constructor 
     public Servidor()
     {
@@ -14,15 +15,14 @@ public class Servidor {
          try{
              ServerSocket server = new ServerSocket(5005);
              //provisional
-             Socket socket = server.accept();
-             DataInputStream entrada = 
-                     new DataInputStream(socket.getInputStream());
-             while(true)
-             {                 
-                     String cad1 = entrada.readUTF(); 
-                     System.out.println("Texto: " + cad1);              
+             while(true){
+                    Socket socket = server.accept();
+                    ProcesoCliente pCliente = 
+                    new ProcesoCliente(socket,listaUsuarios);
+                     Thread hilo1 = new Thread(pCliente);
+                     hilo1.start();
              }
-            // System.out.println("Alguien se conecto");
+             // System.out.println("Alguien se conecto");
          }catch(Exception e){
              System.out.println("Error al conectarme");
          }
